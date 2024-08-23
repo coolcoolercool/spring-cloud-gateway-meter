@@ -1,0 +1,12 @@
+scrape_configs:
+  - job_name: 'spring-cloud-gateway'
+    static_configs:
+      - targets: ['localhost:8080']  # 替换为实际的服务地址和端口
+
+    # 指标标签兼容，spring cloud  gateway 3.x版本前缀加了spring_cloud_
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: 'gateway(.*)'
+        target_label: '__name__'
+        replacement: 'spring_cloud_gateway$1'
+
